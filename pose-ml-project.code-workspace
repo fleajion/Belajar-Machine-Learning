@@ -1,0 +1,185 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "python.defaultInterpreterPath": "${workspaceFolder}/venv/bin/python",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.formatting.provider": "black",
+    "python.analysis.typeCheckingMode": "basic",
+    "files.exclude": {
+      "**/__pycache__": true,
+      "**/*.pyc": true,
+      "**/.pytest_cache": true,
+      "**/.ipynb_checkpoints": true,
+      "**/temp_frame.jpg": true
+    },
+    "files.associations": {
+      "*.pkl": "python",
+      "*.ini": "ini"
+    },
+    "editor.formatOnSave": true,
+    "editor.rulers": [88, 120],
+    "editor.tabSize": 4,
+    "python.testing.pytestEnabled": true,
+    "python.analysis.diagnosticMode": "workspace",
+    "jupyter.widgetScriptSources": ["jsdelivr.com", "unpkg.com"],
+    "terminal.integrated.env.windows": {
+      "PYTHONPATH": "${workspaceFolder}"
+    },
+    "terminal.integrated.env.linux": {
+      "PYTHONPATH": "${workspaceFolder}"
+    },
+    "terminal.integrated.env.osx": {
+      "PYTHONPATH": "${workspaceFolder}"
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-python.python",
+      "ms-python.vscode-pylance",
+      "ms-toolsai.jupyter",
+      "njpwerner.autodocstring",
+      "visualstudioexptteam.vscodeintellicode",
+      "donjayamanne.githistory",
+      "eamodio.gitlens"
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Python: ML Pose Classifier",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/ml_pose_classifier.py",
+        "console": "integratedTerminal",
+        "justMyCode": true
+      },
+      {
+        "name": "Python: Pose Detection System",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/pose_detection_system.py",
+        "console": "integratedTerminal",
+        "justMyCode": true
+      },
+      {
+        "name": "Python: Data Augmentation",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/data_augmentation.py",
+        "console": "integratedTerminal",
+        "justMyCode": true
+      },
+      {
+        "name": "Python: Streamlit App",
+        "type": "python",
+        "request": "launch",
+        "module": "streamlit",
+        "args": ["run", "${workspaceFolder}/app_streamlit.py"],
+        "console": "integratedTerminal",
+        "justMyCode": true
+      },
+      {
+        "name": "Python: Current File",
+        "type": "python",
+        "request": "launch",
+        "program": "${file}",
+        "console": "integratedTerminal",
+        "justMyCode": true
+      },
+      {
+        "name": "Python: Train Model (Quick)",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/ml_pose_classifier.py",
+        "console": "integratedTerminal",
+        "args": ["--mode", "train", "--quick"],
+        "justMyCode": true
+      }
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Setup Virtual Environment",
+        "type": "shell",
+        "command": "python -m venv venv && source venv/bin/activate && pip install -r requirements.txt",
+        "windows": {
+          "command": "python -m venv venv && venv\\Scripts\\activate && pip install -r requirements.txt"
+        },
+        "group": "build",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        }
+      },
+      {
+        "label": "Install Dependencies",
+        "type": "shell",
+        "command": "pip install -r requirements.txt",
+        "group": "build",
+        "presentation": {
+          "reveal": "always"
+        }
+      },
+      {
+        "label": "Run Streamlit App",
+        "type": "shell",
+        "command": "streamlit run app_streamlit.py",
+        "group": "test",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        }
+      },
+      {
+        "label": "Collect Training Data",
+        "type": "shell",
+        "command": "python data_augmentation.py",
+        "group": "test",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        }
+      },
+      {
+        "label": "Train ML Model",
+        "type": "shell",
+        "command": "python ml_pose_classifier.py",
+        "group": "test",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        }
+      },
+      {
+        "label": "Test Webcam Detection",
+        "type": "shell",
+        "command": "python pose_detection_system.py",
+        "group": "test",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        }
+      },
+      {
+        "label": "Clean Project",
+        "type": "shell",
+        "command": "find . -type d -name '__pycache__' -exec rm -r {} + && find . -type f -name '*.pyc' -delete",
+        "windows": {
+          "command": "Get-ChildItem -Include __pycache__ -Recurse -Force | Remove-Item -Force -Recurse; Get-ChildItem -Include *.pyc -Recurse -Force | Remove-Item -Force"
+        },
+        "group": "build",
+        "presentation": {
+          "reveal": "silent"
+        }
+      }
+    ]
+  }
+}
